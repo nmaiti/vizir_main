@@ -149,7 +149,7 @@ static int __init i2c_gpio_custom_probe(void)
 {
 	int err;
 
-	printk(KERN_INFO DRV_DESC " version " DRV_VERSION "\n");
+	printk(KERN_INFO DRV_DESC " i2c_gpio_custom version " DRV_VERSION "\n");
 
 	err = i2c_gpio_custom_add_one(0, bus0);
 	if (err)
