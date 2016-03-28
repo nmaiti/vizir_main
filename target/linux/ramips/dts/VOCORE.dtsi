@@ -9,8 +9,33 @@
 			status = "okay";
 		};
 
-		i2c@900 {
-			status = "okay";
+		gdma: gdma@2800 {
+			compatible = "ralink,rt2880-gdma";
+			reg = <0x2800 0x800>;
+
+			resets = <&rstctrl 14>;
+			reset-names = "dma";
+
+			interrupt-parent = <&intc>;
+			interrupts = <7>;
+
+			#dma-cells = <1>;
+			#dma_channels = <16>;
+			#dma-requests = <16>;
+		};
+
+		i2s: i2s@a00 {
+			compatible = "ralink,mt7620a-i2s";
+			reg = <0xa00 0x100>;
+
+			resets = <&rstctrl 17>;
+			reset-names = "i2s";
+
+			interrupt-parent = <&intc>;
+			interrupts = <10>;
+
+			dmas = <&gdma 2 &gdma 3>;
+			dma-names = "tx", "rx";
 		};
 	};
 
@@ -46,6 +71,28 @@
 
 	ohci@101c1000 {
 		status = "okay";
+	};
+
+	i2c-gpio {
+		compatible = "i2c-gpio";
+		gpios = <&gpio0 11 0 &gpio0 14 0>;
+		i2c-gpio,delay-us = <2>; /* around 400KHz */
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		wm8960: wm8960@1a {
+			compatible = "wm8960";
+			reg = <0x1a>;
+		};
+	};
+
+	audio {
+		compatible = "ralink,wm8960-audio";
+		model = "wm8960-audio";
+
+		cpu-dai = <&i2s>;
+		codec-dai = <&wm8960>;
 	};
 
 	gpio-export {
