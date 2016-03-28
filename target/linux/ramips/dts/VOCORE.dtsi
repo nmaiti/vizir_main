@@ -17,8 +17,13 @@
 	pinctrl {
 		state_default: pinctrl0 {
 			gpio {
-				ralink,group = "jtag", "uartf", "led";
+				ralink,group = "jtag", "led";
 				ralink,function = "gpio";
+			};
+
+			gpio_i2s {
+				ralink,group = "uartf";
+				ralink,function = "gpio i2s";
 			};
 		};
 	};
@@ -53,28 +58,6 @@
 			gpios = <&gpio0 0 0>;
 		};
 
-		/* UARTF */
-		gpio7 {
-			/* UARTF_RTS_N */
-			gpio-export,name = "gpio7";
-			gpio-export,direction_may_change = <1>;
-			gpios = <&gpio0 7 0>;
-		};
-
-		gpio8 {
-			/* UARTF_TXD */
-			gpio-export,name = "gpio8";
-			gpio-export,direction_may_change = <1>;
-			gpios = <&gpio0 8 0>;
-		};
-
-		gpio9 {
-			/* UARTF_CTS_N */
-			gpio-export,name = "gpio9";
-			gpio-export,direction_may_change = <1>;
-			gpios = <&gpio0 9 0>;
-		};
-
 		gpio12 {
 			/* UARTF_DCD_N */
 			gpio-export,name = "gpio12";
@@ -87,13 +70,6 @@
 			gpio-export,name = "gpio13";
 			gpio-export,direction_may_change = <1>;
 			gpios = <&gpio0 13 0>;
-		};
-
-		gpio14 {
-			/* UARTF_RIN */
-			gpio-export,name = "gpio14";
-			gpio-export,direction_may_change = <1>;
-			gpios = <&gpio0 14 0>;
 		};
 
 		/* JTAG */
@@ -132,14 +108,6 @@
 			gpios = <&gpio0 21 0>;
 		};
 
-		/* ETH LEDs */
-		gpio22 {
-			/* ETH0_LED */
-			gpio-export,name = "gpio22";
-			gpio-export,direction_may_change = <1>;
-			gpios = <&gpio1 0 0>;
-		};
-
 		gpio23 {
 			/* ETH1_LED */
 			gpio-export,name = "gpio23";
@@ -161,12 +129,6 @@
 			gpios = <&gpio1 3 0>;
 		};
 
-		gpio26 {
-			/* ETH4_LED */
-			gpio-export,name = "gpio26";
-			gpio-export,direction_may_change = <1>;
-			gpios = <&gpio1 4 0>;
-		};
 	};
 
 	gpio-leds {
@@ -175,13 +137,13 @@
 		status {
 			/* UARTF_RXD */
 			label = "vocore:green:status";
-			gpios = <&gpio0 10 0>;
+			gpios = <&gpio1 0 0>;
 		};
 
 		eth {
 			/* UARTF_DTR_N */
 			label = "vocore:orange:eth";
-			gpios = <&gpio0 11 0>;
+			gpios = <&gpio1 4 0>;
 		};
 	};
 };
